@@ -26,13 +26,13 @@ Este comando inicia phpMyAdmin y lo vincula con el contenedor MySQL.
 1. Abre tu navegador web
 2. Visita `http://localhost:8080`
 3. Inicia sesión con las credenciales:
-   - Usuario: `usuario`
-   - Contraseña: `password`
+   - Usuario: `root`
+   - Contraseña: `root_password`
 
 ## 4. Copiar archivo CSV al contenedor
 
 ```bash
-docker cp /ruta/local/basededatos.csv mysql-container:/var/lib/mysql-files/basededatos.csv
+docker cp -a /ruta/local/de/csvs/. mysql-container:/var/lib/mysql-files/
 ```
 
 Reemplaza `/ruta/local/` con la ruta de tu directorio local donde se encuentra el archivo CSV.
