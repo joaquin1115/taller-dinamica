@@ -1,57 +1,73 @@
 import tkinter as tk
 from tkinter import ttk
-from conexion_bd import get_data_from_db
-from graficos import graficar
+from tkinter import messagebox
+from datos import obtener_datos
+from graficador import graficar_datos
 
-# Definir las variables de la base de datos
-VARIABLES = [
-    "areas_verdes",
-    "areas_verdes_cultivadas",
-    "areas_verdes_deforestadas",
-    "produccion_zinc",
-    "cantidad_desechos_domesticos",
-    "emision_total_pm10",
-    # Puedes agregar más variables aquí...
-]
 
-def get_variable_data(variable):
-    """Obtiene los datos de la base de datos según la variable seleccionada."""
-    query = f"SELECT months, {variable} FROM contaminacion_pm10_lima ORDER BY months"
-    data = get_data_from_db(query)
-    if data:
-        months = [row[0] for row in data]
-        values = [row[1] for row in data]
-        return months, values
-    return None, None
+def generar_grafica():
+    tabla = combo_tabla.get()
+    columnas_seleccionadas = [var.get() for var in variables if var.get()]
 
-def plot_selected_variable(variable):
-    """Llama a la función para graficar la variable seleccionada."""
-    months, values = get_variable_data(variable)
-    if months and values:
-        graficar(months, values, "Mes", variable.replace('_', ' ').capitalize(), f"Evolución de {variable.replace('_', ' ').capitalize()} por Mes")
+    if tabla and columnas_seleccionadas:
+        df = obtener_datos(tabla)
+        if 'months' in columnas_seleccionadas:
+            messagebox.showwarning("Advertencia", "'months' no puede ser seleccionado para graficar.")
+        else:
+            graficar_datos(df, columnas_seleccionadas, f"Comportamiento del sistema en {tabla}", figura_canvas)
     else:
-        print(f"No se pudieron obtener datos para la variable: {variable}")
+        messagebox.showwarning("Advertencia", "Por favor, selecciona una tabla y al menos una columna.")
 
-def create_interface():
-    """Crea la interfaz gráfica del usuario."""
-    root = tk.Tk()
-    root.title("Gráficos de Contaminación por PM10 en Lima")
 
-    # Etiqueta
-    label = ttk.Label(root, text="Seleccione la variable para graficar:")
-    label.pack(pady=10)
+def cargar_columnas(event):
+    tabla = combo_tabla.get()
+    if tabla:
+        df = obtener_datos(tabla)
+        columnas = [col for col in df.columns if col != 'months']
 
-    # Combobox para seleccionar la variable
-    variable_selector = ttk.Combobox(root, values=VARIABLES, state="readonly")
-    variable_selector.pack(pady=5)
+        # Limpia los checkboxes anteriores
+        for widget in frame_checkboxes.winfo_children():
+            widget.destroy()
 
-    # Botón para graficar
-    plot_button = ttk.Button(root, text="Graficar",
-                             command=lambda: plot_selected_variable(variable_selector.get()))
-    plot_button.pack(pady=10)
+        # Crea un checkbox para cada columna
+        global variables
+        variables = []
+        for col in columnas:
+            var = tk.StringVar(value=col)
+            chk = tk.Checkbutton(frame_checkboxes, text=col, variable=var, onvalue=col, offvalue="")
+            chk.pack(anchor="w")
+            variables.append(var)
 
-    # Ejecutar la interfaz
-    root.mainloop()
 
-if __name__ == "__main__":
-    create_interface()
+# Crear la ventana principal
+ventana = tk.Tk()
+ventana.title("Visualizador de Datos")
+
+# Etiqueta y combo para seleccionar la tabla
+label_tabla = tk.Label(ventana, text="Selecciona una tabla:")
+label_tabla.pack(pady=5)
+
+combo_tabla = ttk.Combobox(ventana, values=[
+    "sector_vehicular", "areas_verdes", "capacidad_hospitalaria",
+    "contaminacion_lima", "desechos_urbanos", "hombres_enfermos",
+    "mujeres_enfermas", "ninos_enfermos", "personas_enfermas",
+    "poblacion_hombres", "poblacion_mujeres", "poblacion_lima",
+    "sector_industrial"
+])
+combo_tabla.pack(pady=5)
+combo_tabla.bind("<<ComboboxSelected>>", cargar_columnas)
+
+# Frame para los checkboxes de columnas
+frame_checkboxes = tk.Frame(ventana)
+frame_checkboxes.pack(pady=5, fill='both', expand=True)
+
+# Botón para generar la gráfica
+boton_graficar = tk.Button(ventana, text="Ver comportamiento", command=generar_grafica)
+boton_graficar.pack(pady=20)
+
+# Frame para el gráfico
+figura_canvas = tk.Frame(ventana)
+figura_canvas.pack(fill='both', expand=True)
+
+# Ejecutar la interfaz
+ventana.mainloop()
