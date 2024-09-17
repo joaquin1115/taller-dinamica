@@ -35,7 +35,7 @@ Este comando inicia phpMyAdmin y lo vincula con el contenedor MySQL.
 docker cp -a /ruta/local/de/csvs/. mysql-container:/var/lib/mysql-files/
 ```
 
-Reemplaza `/ruta/local/` con la ruta de tu directorio local donde se encuentra el archivo CSV.
+Reemplaza `/ruta/local/de/csvs/` con la ruta de tu directorio local donde se encuentran los archivos CSV.
 
 ## Notas adicionales
 
