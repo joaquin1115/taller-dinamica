@@ -1,132 +1,229 @@
-CREATE TABLE contaminacion_pm10_lima (
+SET sql_mode = "";
+
+DROP TABLE IF EXISTS sector_industrial;
+DROP TABLE IF EXISTS poblacion_lima;
+DROP TABLE IF EXISTS poblacion_mujeres;
+DROP TABLE IF EXISTS poblacion_hombres;
+DROP TABLE IF EXISTS personas_enfermas;
+DROP TABLE IF EXISTS ninos_enfermos;
+DROP TABLE IF EXISTS mujeres_enfermas;
+DROP TABLE IF EXISTS hombres_enfermos;
+DROP TABLE IF EXISTS desechos_urbanos;
+DROP TABLE IF EXISTS contaminacion_lima;
+DROP TABLE IF EXISTS capacidad_hospitalaria;
+DROP TABLE IF EXISTS areas_verdes;
+DROP TABLE IF EXISTS sector_vehicular;
+
+-- Habilitar la carga de archivos desde el sistema
+SET GLOBAL local_infile = 1;
+
+-- Crear tabla sector_vehicular
+CREATE TABLE sector_vehicular (
     months FLOAT PRIMARY KEY,
-    areas_verdes FLOAT,
-    areas_verdes_cultivadas FLOAT,
-    areas_verdes_deforestadas FLOAT,
-    areas_verdes_inicial FLOAT,
-    produccion_zinc FLOAT,
-    camas_fuera_de_servicio FLOAT,
-    cantidad_areas_verdes_cultivadas FLOAT,
-    demanda_interna_zinc_lima FLOAT,
-    cantidad_desechos_domesticos FLOAT,
-    zinc_mineria_informal FLOAT,
-    zinc_productos_sustitutos FLOAT,
-    zinc_refinado_para_venta FLOAT,
-    capacidad_hospitalaria FLOAT,
-    consumo_hoteleria_restaurantes FLOAT,
-    conversion_millones_soles_tonelada FLOAT,
-    conversion_millones_soles_tonelada_por_100 FLOAT,
-    defunciones_total FLOAT,
-    defunciones_hombres FLOAT,
-    defunciones_mujeres FLOAT,
-    demanda_zinc_galvanizacion FLOAT,
-    demanda_zinc_otras_actividades FLOAT,
-    demanda_externa_zinc FLOAT,
-    demanda_interna_zinc FLOAT,
-    desechos_para_quema FLOAT,
-    desechos_urbanos FLOAT,
-    desechos_urbanos_gestionados FLOAT,
-    desechos_urbanos_reciclados FLOAT,
-    desechos_urbanos_generados FLOAT,
-    reduccion_pm10_areas_verdes FLOAT,
-    reduccion_pm10_total FLOAT,
-    emigrantes_total FLOAT,
-    pm10_desechos_quemados FLOAT,
-    emision_total_pm10 FLOAT,
-    emision_pm10_industrias FLOAT,
-    entrada_vehiculos_combustible_fosil FLOAT,
-    hombres_total FLOAT,
-    hombres_afectados FLOAT,
-    hombres_curados FLOAT,
-    hombres_enfermos FLOAT,
-    hombres_fallecidos FLOAT,
-    importaciones_vehiculos_agnv FLOAT,
-    impuestos_total FLOAT,
-    incremento_pm10 FLOAT,
-    incremento_demanda_interna_zinc FLOAT,
-    ingresos_ventas FLOAT,
-    ingresos_totales_empresas_zinc FLOAT,
-    inmigrantes_total FLOAT,
-    inversion_ahorro FLOAT,
-    inversion_infraestructura_agnv_chatarra FLOAT,
-    inversion_tecnologia FLOAT,
-    mujeres_total FLOAT,
-    mujeres_afectadas FLOAT,
-    mujeres_curadas FLOAT,
-    mujeres_enfermas FLOAT,
-    mujeres_fallecidas FLOAT,
-    nacimientos_total FLOAT,
-    ninos_afectados FLOAT,
-    ninos_curados FLOAT,
-    ninos_enfermos FLOAT,
-    ninos_fallecidos FLOAT,
-    nivel_contaminacion FLOAT,
-    nuevas_camas FLOAT,
-    personas_afectadas_total FLOAT,
-    personas_afectadas_contaminacion FLOAT,
-    personas_curadas_total FLOAT,
-    personas_enfermas_total FLOAT,
-    personas_fallecidas_total FLOAT,
-    poblacion_total FLOAT,
-    poblacion_lima FLOAT,
-    politica_conversion_cfv_agnv FLOAT,
-    produccion_acumulada_zinc_lima FLOAT,
-    produccion_zinc_refinado FLOAT,
-    tasa_ahorro FLOAT,
-    tasa_areas_verdes_cultivadas FLOAT,
-    tasa_aumento_camas FLOAT,
-    tasa_demanda_zinc_galvanizacion FLOAT,
-    tasa_demanda_zinc_otras_actividades FLOAT,
-    tasa_demanda_informal_zinc FLOAT,
-    tasa_desechos_hoteles_restaurantes FLOAT,
-    tasa_disminucion_politicas_gubernamentales FLOAT,
-    tasa_emision_pm10_por_zinc FLOAT,
-    tasa_gestion_desechos_urbanos FLOAT,
-    tasa_impuestos FLOAT,
-    tasa_inversion_externa_tecnologia FLOAT,
-    tasa_personas_curadas FLOAT,
-    tasa_quema_artesanal_desechos FLOAT,
-    tasa_deforestacion FLOAT,
-    tasa_defunciones_total FLOAT,
-    tasa_emigrantes_total FLOAT,
-    tasa_inmigrantes_total FLOAT,
-    tasa_nacimientos_total FLOAT,
-    toneladas_pm10_lima FLOAT,
-    emision_pm10_desechos_urbanos FLOAT,
-    emision_pm10_vehicular FLOAT,
-    vehiculos_cfv_convertido_chatarra FLOAT,
-    vehiculos_cfv_fuera_de_circulacion FLOAT,
     vehiculos_combustible_fosil FLOAT,
-    vehiculos_agnv FLOAT,
-    vehiculos_agnv_convertido_chatarra FLOAT,
-    vehiculos_agnv_fuera_de_circulacion FLOAT,
-    ventas_zinc_soles FLOAT,
-    vida_util_vehiculos_agnv FLOAT,
-    vida_util_vehiculos_combustible_fosil FLOAT
+    vehiculos_gnv FLOAT
 );
 
-LOAD DATA INFILE '/var/lib/mysql-files/basededatos.csv'
-INTO TABLE contaminacion_pm10_lima
-FIELDS TERMINATED BY ','
-ENCLOSED BY '"'
+-- Crear tabla areas_verdes
+CREATE TABLE areas_verdes (
+    months FLOAT PRIMARY KEY,
+    areas_verdes_total FLOAT,
+    areas_verdes_cultivadas FLOAT,
+    areas_verdes_deforestadas FLOAT
+);
+
+-- Crear tabla capacidad_hospitalaria
+CREATE TABLE capacidad_hospitalaria (
+    months FLOAT PRIMARY KEY,
+    capacidad_total FLOAT,
+    camas_fuera_de_servicio FLOAT,
+    nuevas_camas FLOAT
+);
+
+-- Crear tabla contaminacion_lima
+CREATE TABLE contaminacion_lima (
+    months FLOAT PRIMARY KEY,
+    toneladas_pm10 FLOAT,
+    incremento_pm10 FLOAT,
+    disminucion_pm10 FLOAT
+);
+
+-- Crear tabla desechos_urbanos
+CREATE TABLE desechos_urbanos (
+    months FLOAT PRIMARY KEY,
+    desechos_total FLOAT,
+    desechos_generados FLOAT,
+    desechos_reciclados FLOAT
+);
+
+-- Crear tabla hombres_enfermos
+CREATE TABLE hombres_enfermos (
+    months FLOAT PRIMARY KEY,
+    hombres_enfermos_total FLOAT,
+    hombres_curados FLOAT,
+    hombres_fallecidos FLOAT
+);
+
+-- Crear tabla mujeres_enfermas
+CREATE TABLE mujeres_enfermas (
+    months FLOAT PRIMARY KEY,
+    mujeres_enfermas_total FLOAT,
+    mujeres_curadas FLOAT,
+    mujeres_fallecidas FLOAT
+);
+
+-- Crear tabla niños_enfermos
+CREATE TABLE ninos_enfermos (
+    months FLOAT PRIMARY KEY,
+    ninos_enfermos_total FLOAT,
+    ninos_curados FLOAT,
+    ninos_fallecidos FLOAT
+);
+
+-- Crear tabla personas_enfermas
+CREATE TABLE personas_enfermas (
+    months FLOAT PRIMARY KEY,
+    personas_enfermas_total FLOAT,
+    personas_fallecidas FLOAT,
+    personas_curadas FLOAT
+);
+
+-- Crear tabla poblacion_hombres
+CREATE TABLE poblacion_hombres (
+    months FLOAT PRIMARY KEY,
+    hombres_total FLOAT,
+    defunciones_hombres FLOAT,
+    emigracion_hombres FLOAT,
+    nacimientos_hombres FLOAT,
+    inmigracion_hombres FLOAT
+);
+
+-- Crear tabla poblacion_mujeres
+CREATE TABLE poblacion_mujeres (
+    months FLOAT PRIMARY KEY,
+    mujeres_total FLOAT,
+    defunciones_mujeres FLOAT,
+    emigracion_mujeres FLOAT,
+    nacimientos_mujeres FLOAT,
+    inmigracion_mujeres FLOAT
+);
+
+-- Crear tabla poblacion_lima
+CREATE TABLE poblacion_lima (
+    months FLOAT PRIMARY KEY,
+    poblacion_total FLOAT,
+    inmigrantes FLOAT,
+    defunciones FLOAT,
+    emigrantes FLOAT,
+    nacimientos FLOAT
+);
+
+-- Crear tabla sector_industrial
+CREATE TABLE sector_industrial (
+    months FLOAT PRIMARY KEY,
+    emision_total_pm10 FLOAT
+);
+
+-- Poblar tabla sector_vehicular
+LOAD DATA INFILE '/var/lib/mysql-files/sector_vehicular.csv'
+INTO TABLE sector_vehicular
+FIELDS TERMINATED BY ',' 
 LINES TERMINATED BY '\n'
 IGNORE 1 LINES
-(months, areas_verdes, areas_verdes_cultivadas, areas_verdes_deforestadas, areas_verdes_inicial, produccion_zinc, camas_fuera_de_servicio,
- cantidad_areas_verdes_cultivadas, demanda_interna_zinc_lima, cantidad_desechos_domesticos, zinc_mineria_informal, zinc_productos_sustitutos,
- zinc_refinado_para_venta, capacidad_hospitalaria, consumo_hoteleria_restaurantes, conversion_millones_soles_tonelada,
- conversion_millones_soles_tonelada_por_100, defunciones_total, defunciones_hombres, defunciones_mujeres, demanda_zinc_galvanizacion,
- demanda_zinc_otras_actividades, demanda_externa_zinc, demanda_interna_zinc, desechos_para_quema, desechos_urbanos, desechos_urbanos_gestionados,
- desechos_urbanos_reciclados, desechos_urbanos_generados, reduccion_pm10_areas_verdes, reduccion_pm10_total, emigrantes_total,
- pm10_desechos_quemados, emision_total_pm10, emision_pm10_industrias, entrada_vehiculos_combustible_fosil, hombres_total, hombres_afectados,
- hombres_curados, hombres_enfermos, hombres_fallecidos, importaciones_vehiculos_agnv, impuestos_total, incremento_pm10, incremento_demanda_interna_zinc,
- ingresos_ventas, ingresos_totales_empresas_zinc, inmigrantes_total, inversion_ahorro, inversion_infraestructura_agnv_chatarra,
- inversion_tecnologia, mujeres_total, mujeres_afectadas, mujeres_curadas, mujeres_enfermas, mujeres_fallecidas, nacimientos_total, ninos_afectados,
- ninos_curados, ninos_enfermos, ninos_fallecidos, nivel_contaminacion, nuevas_camas, personas_afectadas_total, personas_afectadas_contaminacion,
- personas_curadas_total, personas_enfermas_total, personas_fallecidas_total, poblacion_total, poblacion_lima, politica_conversion_cfv_agnv,
- produccion_acumulada_zinc_lima, produccion_zinc_refinado, tasa_ahorro, tasa_areas_verdes_cultivadas, tasa_aumento_camas, tasa_demanda_zinc_galvanizacion,
- tasa_demanda_zinc_otras_actividades, tasa_demanda_informal_zinc, tasa_desechos_hoteles_restaurantes, tasa_disminucion_politicas_gubernamentales,
- tasa_emision_pm10_por_zinc, tasa_gestion_desechos_urbanos, tasa_impuestos, tasa_inversion_externa_tecnologia, tasa_personas_curadas, tasa_quema_artesanal_desechos,
- tasa_deforestacion, tasa_defunciones_total, tasa_emigrantes_total, tasa_inmigrantes_total, tasa_nacimientos_total, toneladas_pm10_lima,
- emision_pm10_desechos_urbanos, emision_pm10_vehicular, vehiculos_cfv_convertido_chatarra, vehiculos_cfv_fuera_de_circulacion, vehiculos_combustible_fosil,
- vehiculos_agnv, vehiculos_agnv_convertido_chatarra, vehiculos_agnv_fuera_de_circulacion, ventas_zinc_soles, vida_util_vehiculos_agnv,
- vida_util_vehiculos_combustible_fosil);
+(months, vehiculos_combustible_fosil, vehiculos_gnv);
+
+-- Poblar tabla areas_verdes
+LOAD DATA INFILE '/var/lib/mysql-files/areas_verdes.csv'
+INTO TABLE areas_verdes
+FIELDS TERMINATED BY ',' 
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+(months, areas_verdes_total, areas_verdes_cultivadas, areas_verdes_deforestadas);
+
+-- Poblar tabla capacidad_hospitalaria
+LOAD DATA INFILE '/var/lib/mysql-files/capacidad_hospitalaria.csv'
+INTO TABLE capacidad_hospitalaria
+FIELDS TERMINATED BY ',' 
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+(months, capacidad_total, camas_fuera_de_servicio, nuevas_camas);
+
+-- Poblar tabla contaminacion_lima
+LOAD DATA INFILE '/var/lib/mysql-files/contaminacion_lima.csv'
+INTO TABLE contaminacion_lima
+FIELDS TERMINATED BY ',' 
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+(months, toneladas_pm10, incremento_pm10, disminucion_pm10);
+
+-- Poblar tabla desechos_urbanos
+LOAD DATA INFILE '/var/lib/mysql-files/desechos_urbanos.csv'
+INTO TABLE desechos_urbanos
+FIELDS TERMINATED BY ',' 
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+(months, desechos_total, desechos_generados, desechos_reciclados);
+
+-- Poblar tabla hombres_enfermos
+LOAD DATA INFILE '/var/lib/mysql-files/hombres_enfermos.csv'
+INTO TABLE hombres_enfermos
+FIELDS TERMINATED BY ',' 
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+(months, hombres_enfermos_total, hombres_curados, hombres_fallecidos);
+
+-- Poblar tabla mujeres_enfermas
+LOAD DATA INFILE '/var/lib/mysql-files/mujeres_enfermas.csv'
+INTO TABLE mujeres_enfermas
+FIELDS TERMINATED BY ',' 
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+(months, mujeres_enfermas_total, mujeres_curadas, mujeres_fallecidas);
+
+-- Poblar tabla ninos_enfermos
+LOAD DATA INFILE '/var/lib/mysql-files/niños_enfermos.csv'
+INTO TABLE ninos_enfermos
+FIELDS TERMINATED BY ',' 
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+(months, ninos_enfermos_total, ninos_curados, ninos_fallecidos);
+
+-- Poblar tabla personas_enfermas
+LOAD DATA INFILE '/var/lib/mysql-files/personas_enfermas.csv'
+INTO TABLE personas_enfermas
+FIELDS TERMINATED BY ',' 
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+(months, personas_enfermas_total, personas_fallecidas, personas_curadas);
+
+-- Poblar tabla poblacion_hombres
+LOAD DATA INFILE '/var/lib/mysql-files/poblacion_hombres.csv'
+INTO TABLE poblacion_hombres
+FIELDS TERMINATED BY ',' 
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+(months, hombres_total, defunciones_hombres, emigracion_hombres, nacimientos_hombres, inmigracion_hombres);
+
+-- Poblar tabla poblacion_mujeres
+LOAD DATA INFILE '/var/lib/mysql-files/poblacion_mujeres.csv'
+INTO TABLE poblacion_mujeres
+FIELDS TERMINATED BY ',' 
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+(months, mujeres_total, defunciones_mujeres, emigracion_mujeres, nacimientos_mujeres, inmigracion_mujeres);
+
+-- Poblar tabla poblacion_lima
+LOAD DATA INFILE '/var/lib/mysql-files/poblacion_lima.csv'
+INTO TABLE poblacion_lima
+FIELDS TERMINATED BY ',' 
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+(months, poblacion_total, inmigrantes, defunciones, emigrantes, nacimientos);
+
+-- Poblar tabla sector_industrial
+LOAD DATA INFILE '/var/lib/mysql-files/sector_industrial.csv'
+INTO TABLE sector_industrial
+FIELDS TERMINATED BY ',' 
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+(months, emision_total_pm10);
