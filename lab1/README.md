@@ -45,7 +45,7 @@ Este comando inicia phpMyAdmin y lo vincula con el contenedor MySQL.
    - Contraseña: `root_password`
 
 ### 5. Crear y poblar las tablas
-En phpMyAdmin, ir a `taller_bd` de las opciones en el panel izquierdo, y luego ir a `SQL` de la cinta de opciones en la parte superior. Pegar el [script](/lab1/bd-mysql/script.sql) para la creación y poblamiento de tablas. Hacer clic en el botón `Continuar` para ejecutar.
+En phpMyAdmin, ir a `SQL` de la cinta de opciones en la parte superior. Pegar el [script](/lab1/bd-mysql/script.sql) para la creación y poblamiento de tablas. Hacer clic en el botón `Continuar` para ejecutar.
 
 ## Instalar paquetes y ejecutar main.py
 
