@@ -56,7 +56,7 @@ Para ejecutar estos pasos es necesario tener Python instalado en tu sistema.
 Abre una terminal o línea de comandos y ejecuta el siguiente comando para instalar los paquetes requeridos:
 
 ```bash
-pip install matplotlib pandas pymysql
+pip install matplotlib pandas pymysql PyMySQL[rsa]
 ```
 
 Este comando instalará:
