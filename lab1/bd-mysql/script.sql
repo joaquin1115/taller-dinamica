@@ -1,3 +1,5 @@
+USE taller_bd;
+
 SET sql_mode = "";
 
 DROP TABLE IF EXISTS sector_industrial;
