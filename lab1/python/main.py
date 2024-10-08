@@ -68,6 +68,5 @@ boton_graficar.pack(pady=20)
 # Frame para el gráfico
 figura_canvas = tk.Frame(ventana)
 figura_canvas.pack(fill='both', expand=True)
-
 # Ejecutar la interfaz
 ventana.mainloop()

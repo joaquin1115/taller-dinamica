@@ -3,7 +3,7 @@ from tkinter import ttk
 from tkinter import messagebox
 from datos import obtener_datos
 from graficador import graficar_datos
-
+from PIL import ImageTk, Image
 
 def generar_grafica():
     tabla = combo_tabla.get()
@@ -34,37 +34,49 @@ def cargar_columnas(event):
         variables = []
         for col in columnas:
             var = tk.StringVar(value=col)
-            chk = tk.Checkbutton(frame_checkboxes, text=col, variable=var, onvalue=col, offvalue="")
+            chk = tk.Checkbutton(frame_checkboxes, text=col,font=("Rockwell",11), variable=var, onvalue=col, offvalue="")
             chk.pack(anchor="w")
             variables.append(var)
 
 
 # Crear la ventana principal
 ventana = tk.Tk()
+ventana.geometry("1600x800")
+ventana.title("Modelo Dinámico")
 ventana.title("Visualizador de Datos")
-
+label_titulo = tk.Label(ventana, text= "Modelo de Simulación dinámica",font = ("Rockwell",15))
+label_titulo.grid(row=0,sticky="we")
 # Etiqueta y combo para seleccionar la tabla
-label_tabla = tk.Label(ventana, text="Selecciona una tabla:")
-label_tabla.pack(pady=5)
+
+image = Image.open("diseño/selecciona_una_tabla.png")
+image = image.resize((200, 35), Image.LANCZOS)
+foto2 = ImageTk.PhotoImage(image)
+
+label_tabla = tk.Label(ventana, text="Selecciona una tabla:",font = ("Rockwell",12),image=foto2,compound="center")
+label_tabla.grid(row=1,column=0)
+
+image = Image.open("diseño/boton_seleccionar.png")
+image = image.resize((200, 35), Image.LANCZOS)
+foto = ImageTk.PhotoImage(image)
 
 combo_tabla = ttk.Combobox(ventana, values=[
     "aumento_animales", "biomasa", "disminucion_biomasa",
     "poblacion_bosques", "quema"
-])
-combo_tabla.pack(pady=5)
+],font=("Rockwell",15),)
+combo_tabla.grid(row=1,column=1)
 combo_tabla.bind("<<ComboboxSelected>>", cargar_columnas)
 
 # Frame para los checkboxes de columnas
 frame_checkboxes = tk.Frame(ventana)
-frame_checkboxes.pack(pady=5, fill='both', expand=True)
+frame_checkboxes.grid(row=2,column=1)
 
 # Botón para generar la gráfica
-boton_graficar = tk.Button(ventana, text="Ver comportamiento", command=generar_grafica)
-boton_graficar.pack(pady=20)
+boton_graficar = tk.Button(ventana, text="Ver comportamiento", command=generar_grafica,image=foto, compound="center",font=("Rockwell",12),borderwidth=0)
+boton_graficar.grid(row=3,sticky="we")
 
 # Frame para el gráfico
 figura_canvas = tk.Frame(ventana)
-figura_canvas.pack(fill='both', expand=True)
+figura_canvas.grid(row=4,columnspan= 2,sticky="nsew")
 
 # Ejecutar la interfaz
 ventana.mainloop()
