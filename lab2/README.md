@@ -12,13 +12,12 @@ Para ejecutar estos pasos es necesario tener Python instalado en su sistema.
 Abra una terminal o línea de comandos y ejecute el siguiente comando para instalar los paquetes requeridos:
 
 ```bash
-pip install matplotlib pandas sqlite3
+pip install matplotlib pandas
 ```
 
 Este comando instalará:
 - matplotlib: para crear gráficos y visualizaciones
 - pandas: para manipulación y análisis de datos
-- sqlite3: para conectar con bases de datos SQLite
 
 ### 2. Modificar ruta local de ubicación de archivos csv
 
