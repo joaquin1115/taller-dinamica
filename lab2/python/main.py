@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
-from datos import obtener_datos
+from datos import obtener_datos, importar_datos
 from graficador import graficar_datos
 from PIL import ImageTk, Image
 
