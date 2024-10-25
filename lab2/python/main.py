@@ -5,6 +5,9 @@ from datos import obtener_datos
 from graficador import graficar_datos
 from PIL import ImageTk, Image
 
+#INGRESAR DIRECCION LOCAL DE CSVS
+direccion_local_de_csvs = "/Users/Joaquín/Documents/Github/taller-dinamica/lab2/csvs/"
+
 def generar_grafica():
     tabla = combo_tabla.get()
     columnas_seleccionadas = [var.get() for var in variables if var.get()]
@@ -38,6 +41,8 @@ def cargar_columnas(event):
             chk.pack(anchor="w")
             variables.append(var)
 
+#Importar datos desde archivos csvs a la base de datos
+importar_datos(direccion_local_de_csvs)
 
 # Crear la ventana principal
 ventana = tk.Tk()

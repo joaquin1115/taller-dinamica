@@ -1,10 +1,5 @@
-import pymysql
+import sqlite3
 
 def conectar_bd():
-    conexion = pymysql.connect(
-        host="localhost",
-        user="usuario",
-        password="password",
-        database="taller_bd"
-    )
+    conexion = sqlite3.connect("taller_bd.db")  # Crea o abre la base de datos local
     return conexion
