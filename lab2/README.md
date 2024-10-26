@@ -31,7 +31,7 @@ direccion_local_de_csvs = "/Users/Joaquín/Documents/Github/taller-dinamica/lab2
 Reemplace el valor asignado a la variable `direccion_local_de_csvs` con la ruta de su directorio local donde se encuentran los archivos CSV.
 
 
-### 2. Ejecutar main.py
+### 3. Ejecutar main.py
 
 Ejecute el archivo [`main.py`](/lab2/python/main.py) mencionado anteriormente.
 
